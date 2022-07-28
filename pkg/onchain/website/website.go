@@ -45,7 +45,7 @@ func Fetch(c *node.Client, addr string, filename string) ([]byte, error) {
 
 func handleInitialRequest(w http.ResponseWriter, r *http.Request) {
 	addr := r.URL.Query()["url"][0]
-	rpcClient := node.NewClient("http://145.239.66.206:33035")
+	rpcClient := node.NewClient()
 	cookie := &http.Cookie{
 		Name:   "ocw",
 		Value:  addr,
@@ -69,7 +69,7 @@ func handleMassaDomainRequest(w http.ResponseWriter, r *http.Request) {
 
 	name := r.Host[:i]
 
-	rpcClient := node.NewClient("http://145.239.66.206:33035")
+	rpcClient := node.NewClient()
 
 	addr, err := Resolve(rpcClient, name)
 	if err != nil {
@@ -109,7 +109,7 @@ func handleSubsequentRequest(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	rpcClient := node.NewClient("http://145.239.66.206:33035")
+	rpcClient := node.NewClient()
 
 	body, err := Fetch(rpcClient, addr.Value, path.Base(r.URL.Path))
 	if err != nil {
