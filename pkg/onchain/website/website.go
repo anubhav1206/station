@@ -14,7 +14,7 @@ import (
 )
 
 func Resolve(client *node.Client, name string) (string, error) {
-	address := "A12ew8eiCS7wnY8SkUdwBgDkdD5qwmbJgkJvYLCvVjWWdoFJJLvW"
+	address := "A1Q65NojVV5YPyZruVkeU1CGeS3tjLNwGSzAmZfAJPE5vuvus4C"
 
 	const dnsPrefix = "record"
 
@@ -106,7 +106,7 @@ func handleAPIRequest(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "http://"+r.Host+"/website/"+splited[0]+"/"+"index.html", http.StatusSeeOther)
 	// address and resource are present
 	case 2:
-		c := node.NewClient("http://145.239.66.206:33035")
+		c := node.NewClient("http://37.187.156.118/test12")
 		Request(w, r, c, splited[0], splited[1])
 	default:
 		pathNotFound(w, r)
@@ -116,7 +116,7 @@ func handleAPIRequest(w http.ResponseWriter, r *http.Request) {
 func handleMassaDomainRequest(w http.ResponseWriter, r *http.Request, index int) {
 	name := r.Host[:index]
 
-	rpcClient := node.NewClient("http://145.239.66.206:33035")
+	rpcClient := node.NewClient("http://37.187.156.118/test12")
 
 	addr, err := Resolve(rpcClient, name)
 	if err != nil {
