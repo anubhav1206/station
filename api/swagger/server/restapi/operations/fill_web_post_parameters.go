@@ -40,6 +40,11 @@ type FillWebPostParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*Wallet nickname's used to deploy the Website.
+	  Required: true
+	  In: path
+	*/
+	Nickname string
 	/*Website's short name.
 	  Required: true
 	  In: path
@@ -69,6 +74,11 @@ func (o *FillWebPostParams) BindRequest(r *http.Request, route *middleware.Match
 		}
 	}
 
+	rNickname, rhkNickname, _ := route.Params.GetOK("nickname")
+	if err := o.bindNickname(rNickname, rhkNickname, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rWebsite, rhkWebsite, _ := route.Params.GetOK("website")
 	if err := o.bindWebsite(rWebsite, rhkWebsite, route.Formats); err != nil {
 		res = append(res, err)
@@ -86,6 +96,20 @@ func (o *FillWebPostParams) BindRequest(r *http.Request, route *middleware.Match
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindNickname binds and validates parameter Nickname from path.
+func (o *FillWebPostParams) bindNickname(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
+	o.Nickname = raw
+
 	return nil
 }
 

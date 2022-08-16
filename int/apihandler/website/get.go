@@ -1,8 +1,6 @@
 package websites
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/massalabs/thyra/api/swagger/server/models"
 	"github.com/massalabs/thyra/api/swagger/server/restapi/operations"
@@ -18,7 +16,6 @@ type newWebsiteGet struct {
 }
 
 func (c *newWebsiteGet) Handle(params operations.UploadWebGetParams) middleware.Responder {
-	fmt.Println("Log")
 	deployers, err := website.GetDeployers()
 	if err != nil {
 		return operations.NewUploadWebGetInternalServerError()

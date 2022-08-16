@@ -50,6 +50,7 @@ func main() {
 	api.CmdExecuteFunctionHandler = cmd.NewExecuteFunction(&walletStorage)
 
 	api.MgmtWalletGetHandler = wallet.NewGet(&walletStorage)
+	api.MgmtWalletGetOneHandler = wallet.NewGetOne(&walletStorage)
 	api.MgmtWalletCreateHandler = wallet.NewCreate(&walletStorage)
 	api.MgmtWalletImportHandler = wallet.NewImport(&walletStorage)
 	api.MgmtWalletDeleteHandler = wallet.NewDelete(&walletStorage)

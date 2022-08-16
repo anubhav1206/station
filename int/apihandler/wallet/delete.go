@@ -1,12 +1,12 @@
 package wallet
 
 import (
+	"os"
 	"sync"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/massalabs/thyra/api/swagger/server/models"
 	"github.com/massalabs/thyra/api/swagger/server/restapi/operations"
-	"github.com/massalabs/thyra/pkg/wallet"
 )
 
 func NewDelete(walletStorage *sync.Map) operations.MgmtWalletDeleteHandler {
@@ -29,11 +29,16 @@ func (c *walletDelete) Handle(params operations.MgmtWalletDeleteParams) middlewa
 			})
 	}
 
-	c.walletStorage.Delete(params.Nickname)
-
-	err := wallet.Delete(params.Nickname)
+	err := os.Remove("wallet_" + params.Nickname + ".json")
 	if err != nil {
-		panic(err)
+		e := errorCodeWalletDeleteNoNickname
+		msg := "Error: Can't delete wallet_" + params.Nickname + ".json file"
+
+		return operations.NewMgmtWalletCreateInternalServerError().WithPayload(
+			&models.Error{
+				Code:    &e,
+				Message: &msg,
+			})
 	}
 
 	return operations.NewMgmtWalletDeleteNoContent()

@@ -65,6 +65,9 @@ func NewThyraServerAPI(spec *loads.Document) *ThyraServerAPI {
 		MgmtWalletGetHandler: MgmtWalletGetHandlerFunc(func(params MgmtWalletGetParams) middleware.Responder {
 			return middleware.NotImplemented("operation MgmtWalletGet has not yet been implemented")
 		}),
+		MgmtWalletGetOneHandler: MgmtWalletGetOneHandlerFunc(func(params MgmtWalletGetOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation MgmtWalletGetOne has not yet been implemented")
+		}),
 		MgmtWalletImportHandler: MgmtWalletImportHandlerFunc(func(params MgmtWalletImportParams) middleware.Responder {
 			return middleware.NotImplemented("operation MgmtWalletImport has not yet been implemented")
 		}),
@@ -131,6 +134,8 @@ type ThyraServerAPI struct {
 	MgmtWalletDeleteHandler MgmtWalletDeleteHandler
 	// MgmtWalletGetHandler sets the operation handler for the mgmt wallet get operation
 	MgmtWalletGetHandler MgmtWalletGetHandler
+	// MgmtWalletGetOneHandler sets the operation handler for the mgmt wallet get one operation
+	MgmtWalletGetOneHandler MgmtWalletGetOneHandler
 	// MgmtWalletImportHandler sets the operation handler for the mgmt wallet import operation
 	MgmtWalletImportHandler MgmtWalletImportHandler
 	// UploadWebGetHandler sets the operation handler for the upload web get operation
@@ -239,6 +244,9 @@ func (o *ThyraServerAPI) Validate() error {
 	}
 	if o.MgmtWalletGetHandler == nil {
 		unregistered = append(unregistered, "MgmtWalletGetHandler")
+	}
+	if o.MgmtWalletGetOneHandler == nil {
+		unregistered = append(unregistered, "MgmtWalletGetOneHandler")
 	}
 	if o.MgmtWalletImportHandler == nil {
 		unregistered = append(unregistered, "MgmtWalletImportHandler")
@@ -351,7 +359,7 @@ func (o *ThyraServerAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/fillWeb/{website}"] = NewFillWebPost(o.context, o.FillWebPostHandler)
+	o.handlers["POST"]["/fillWeb/{website}/wallet/{nickname}"] = NewFillWebPost(o.context, o.FillWebPostHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -368,6 +376,10 @@ func (o *ThyraServerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/mgmt/wallet"] = NewMgmtWalletGet(o.context, o.MgmtWalletGetHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/mgmt/wallet/{nickname}"] = NewMgmtWalletGetOne(o.context, o.MgmtWalletGetOneHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -379,7 +391,7 @@ func (o *ThyraServerAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/uploadWeb/{dnsname}"] = NewUploadWebPost(o.context, o.UploadWebPostHandler)
+	o.handlers["POST"]["/uploadWeb/{dnsname}/wallet/{nickname}"] = NewUploadWebPost(o.context, o.UploadWebPostHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

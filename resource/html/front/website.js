@@ -85,6 +85,8 @@ async function getWebsiteDeployerSC() {
 
 async function deployWebsiteDeployerSC() {
 	const dnsNameInputValue = document.getElementById('websiteName').value;
+	const walletSelect = document.getElementById('wallet-select');
+	const walletValue = walletSelect.options[walletSelect.selectedIndex].text;
 
 	if (dnsNameInputValue == '') {
 		console.log(dnsNameInputValue == '');
@@ -93,7 +95,7 @@ async function deployWebsiteDeployerSC() {
 		document.getElementsByClassName('loading')[0].style.display = 'inline-block';
 		document.getElementsByClassName('loading')[1].style.display = 'inline-block';
 		axios
-			.post('/uploadWeb/' + dnsNameInputValue)
+			.post('/uploadWeb/' + dnsNameInputValue + '/wallet/' + walletValue)
 			.then((operation) => {
 				document.getElementsByClassName('loading')[0].style.display = 'none';
 				document.getElementsByClassName('loading')[1].style.display = 'none';
@@ -124,9 +126,9 @@ function tableInsert(resp, count) {
 		"' type='file' hidden/><button id='upload-website" +
 		count +
 		"'" +
-		"class='primary-button' id='buttonid' type='button' value='Upload MB' >Upload</button><span style='display: none' class='spinner-border loading" +
+		"class='primary-button' id='buttonid' type='button' value='Upload MB' >Upload</button><img src='./logo.png' style='display: none' class='massa-logo-spinner loading" +
 		count +
-		"' role='status'><img src='./logo.png' class='massa-logo-spinner' alt='Massa logo' /></span></div> ";
+		"' alt='Massa logo' /></span></div> ";
 
 	document.getElementById(`upload-website${count}`).addEventListener('click', function () {
 		document.getElementById(`fileid${count}`).value = null;
@@ -144,8 +146,11 @@ function uploadWebsite(file, count) {
 	const bodyFormData = new FormData();
 	bodyFormData.append('zipfile', file);
 	document.getElementsByClassName('loading' + count)[0].style.display = 'inline-block';
+
+	const walletSelect = document.getElementById('wallet-select');
+	const walletValue = walletSelect.options[walletSelect.selectedIndex].text;
 	axios({
-		url: `/fillWeb/${deployers[count].address}`,
+		url: `/fillWeb/${deployers[count].address}/wallet/${walletValue}`,
 		method: 'POST',
 		data: bodyFormData,
 		headers: {
@@ -154,9 +159,11 @@ function uploadWebsite(file, count) {
 	})
 		.then((operation) => {
 			document.getElementsByClassName('loading' + count)[0].style.display = 'none';
-			successMessage('Website uploaded with operation ID : ' + operation);
+			console.log(operation);
+			successMessage('Website ' + operation.data.address + ' updated ');
 		})
 		.catch((e) => {
+			document.getElementsByClassName('loading' + count)[0].style.display = 'none';
 			errorAlert(e.response.data.code);
 		});
 }

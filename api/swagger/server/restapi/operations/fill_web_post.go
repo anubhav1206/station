@@ -29,7 +29,7 @@ func NewFillWebPost(ctx *middleware.Context, handler FillWebPostHandler) *FillWe
 	return &FillWebPost{Context: ctx, Handler: handler}
 }
 
-/* FillWebPost swagger:route POST /fillWeb/{website} fillWebPost
+/* FillWebPost swagger:route POST /fillWeb/{website}/wallet/{nickname} fillWebPost
 
 FillWebPost fill web post API
 

@@ -125,6 +125,37 @@ paths:
           description: Internal Server Error - The server has encountered a situation it does not know how to handle.
           schema:
             $ref: '#/definitions/Error'
+    get:
+      operationId: mgmtWalletGetOne
+      parameters:
+        - in: path
+          name: nickname
+          type: string
+          required: true
+          description: Wallet's short name.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Wallet retrieved.
+          schema:
+            $ref: '#/definitions/Wallet'
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity - syntax is correct, but the server was unable to process the contained instructions.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error - The server has encountered a situation it does not know how to handle.
+          schema:
+            $ref: '#/definitions/Error'
   /uploadWeb:
     get:
       operationId: uploadWebGet
@@ -145,7 +176,7 @@ paths:
           description: Internal Server Error - The server has encountered a situation it does not know how to handle.
           schema:
             $ref: '#/definitions/Error'
-  /uploadWeb/{dnsname}:
+  /uploadWeb/{dnsname}/wallet/{nickname}:
     post:
       operationId: uploadWebPost
       parameters:
@@ -154,6 +185,11 @@ paths:
           type: string
           required: true
           description: DNS name without '.', capitals letters and specifics characters.
+        - in: path
+          name: nickname
+          type: string
+          required: true
+          description: Wallet nickname's used to deploy the Website.
       produces:
         - application/json
       responses:
@@ -173,7 +209,7 @@ paths:
           description: Internal Server Error - The server has encountered a situation it does not know how to handle.
           schema:
             $ref: '#/definitions/Error'
-  /fillWeb/{website}:
+  /fillWeb/{website}/wallet/{nickname}:
     post:
       operationId: fillWebPost
       consumes:
@@ -184,6 +220,11 @@ paths:
           type: string
           required: true
           description: Website's short name.
+        - in: path
+          name: nickname
+          type: string
+          required: true
+          description: Wallet nickname's used to deploy the Website.
         - in: formData
           name: zipfile
           type: file

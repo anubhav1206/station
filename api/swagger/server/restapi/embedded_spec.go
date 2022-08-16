@@ -156,7 +156,7 @@ func init() {
         }
       }
     },
-    "/fillWeb/{website}": {
+    "/fillWeb/{website}/wallet/{nickname}": {
       "post": {
         "consumes": [
           "multipart/form-data"
@@ -170,6 +170,13 @@ func init() {
             "type": "string",
             "description": "Website's short name.",
             "name": "website",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet nickname's used to deploy the Website.",
+            "name": "nickname",
             "in": "path",
             "required": true
           },
@@ -438,6 +445,53 @@ func init() {
       }
     },
     "/mgmt/wallet/{nickname}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "mgmtWalletGetOne",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Wallet's short name.",
+            "name": "nickname",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet retrieved.",
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - syntax is correct, but the server was unable to process the contained instructions.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server has encountered a situation it does not know how to handle.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "delete": {
         "produces": [
           "application/json"
@@ -517,7 +571,7 @@ func init() {
         }
       }
     },
-    "/uploadWeb/{dnsname}": {
+    "/uploadWeb/{dnsname}/wallet/{nickname}": {
       "post": {
         "produces": [
           "application/json"
@@ -528,6 +582,13 @@ func init() {
             "type": "string",
             "description": "DNS name without '.', capitals letters and specifics characters.",
             "name": "dnsname",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet nickname's used to deploy the Website.",
+            "name": "nickname",
             "in": "path",
             "required": true
           }
@@ -837,7 +898,7 @@ func init() {
         }
       }
     },
-    "/fillWeb/{website}": {
+    "/fillWeb/{website}/wallet/{nickname}": {
       "post": {
         "consumes": [
           "multipart/form-data"
@@ -851,6 +912,13 @@ func init() {
             "type": "string",
             "description": "Website's short name.",
             "name": "website",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet nickname's used to deploy the Website.",
+            "name": "nickname",
             "in": "path",
             "required": true
           },
@@ -1072,6 +1140,53 @@ func init() {
       }
     },
     "/mgmt/wallet/{nickname}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "mgmtWalletGetOne",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Wallet's short name.",
+            "name": "nickname",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet retrieved.",
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Bad request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - syntax is correct, but the server was unable to process the contained instructions.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server has encountered a situation it does not know how to handle.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "delete": {
         "produces": [
           "application/json"
@@ -1151,7 +1266,7 @@ func init() {
         }
       }
     },
-    "/uploadWeb/{dnsname}": {
+    "/uploadWeb/{dnsname}/wallet/{nickname}": {
       "post": {
         "produces": [
           "application/json"
@@ -1162,6 +1277,13 @@ func init() {
             "type": "string",
             "description": "DNS name without '.', capitals letters and specifics characters.",
             "name": "dnsname",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet nickname's used to deploy the Website.",
+            "name": "nickname",
             "in": "path",
             "required": true
           }

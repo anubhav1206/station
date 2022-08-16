@@ -7,4 +7,6 @@ const (
 	errorCodeWalletAlreadyExists    = "Wallet-0004"
 	errorCodeWalletDeleteNoNickname = "Wallet-1001"
 	errorCodeWalletNoWallet         = "Wallet-1002"
+	errorCodeWalletFileNotFound     = "Wallet-1003"
+	errorCodeWalletCorruptedFile    = "Wallet-1004"
 )

@@ -14,7 +14,8 @@ import (
 
 // FillWebPostURL generates an URL for the fill web post operation
 type FillWebPostURL struct {
-	Website string
+	Nickname string
+	Website  string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -40,7 +41,14 @@ func (o *FillWebPostURL) SetBasePath(bp string) {
 func (o *FillWebPostURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/fillWeb/{website}"
+	var _path = "/fillWeb/{website}/wallet/{nickname}"
+
+	nickname := o.Nickname
+	if nickname != "" {
+		_path = strings.Replace(_path, "{nickname}", nickname, -1)
+	} else {
+		return nil, errors.New("nickname is required on FillWebPostURL")
+	}
 
 	website := o.Website
 	if website != "" {
