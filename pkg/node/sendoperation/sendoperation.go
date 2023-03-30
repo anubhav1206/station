@@ -34,7 +34,7 @@ const HundredMassa = 100000000000
 
 const OneMassa = 1000000000
 
-const WalletPluginURL = "http://127.0.0.1:8080/rest/wallet/"
+const WalletPluginURL = "http://my.massa/thyra/plugin/Massalabs/Massa%20Wallet/rest/wallet/"
 
 const HTTPRequestTimeout = 60 * time.Second
 
