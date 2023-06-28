@@ -3,10 +3,10 @@ import { massalabsNomination } from '../../../utils/massaConstants';
 import { FiDownload } from 'react-icons/fi';
 import { usePost } from '../../../custom/api';
 import { useEffect } from 'react';
-import { IMassaStore } from '../../../../../shared/interfaces/IPlugin';
+import { MassaStoreModel } from '../../../models';
 
 interface StorePluginProps {
-  plugin: IMassaStore;
+  plugin: MassaStoreModel;
   refetch: () => void;
 }
 function StorePlugin(props: StorePluginProps) {

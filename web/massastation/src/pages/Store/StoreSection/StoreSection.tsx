@@ -7,22 +7,19 @@ import Intl from '../../../i18n/i18n';
 import StorePlugin from './StorePlugin';
 import { UseQueryResult } from '@tanstack/react-query';
 import { sortPlugins } from '../../../utils/sortArray';
-import {
-  IMassaPlugin,
-  IMassaStore,
-} from '../../../../../shared/interfaces/IPlugin';
+import { MassaPluginModel, MassaStoreModel } from '../../../models';
 
 function StoreSection({
   getPlugins,
 }: {
-  getPlugins: UseQueryResult<IMassaPlugin[], undefined>;
+  getPlugins: UseQueryResult<MassaPluginModel[], undefined>;
 }) {
   const navigate = useNavigate();
   const {
     error,
     data: plugins,
     isLoading,
-  } = useResource<IMassaStore[]>('plugin-store');
+  } = useResource<MassaStoreModel[]>('plugin-store');
 
   const { refetch, data: myPlugins } = getPlugins;
 
@@ -32,7 +29,7 @@ function StoreSection({
     }
   });
 
-  const isDownloaded = (plugin: IMassaStore) => {
+  const isDownloaded = (plugin: MassaStoreModel) => {
     return (
       myPlugins?.some((myPlugin) => {
         const { name, author } = myPlugin;

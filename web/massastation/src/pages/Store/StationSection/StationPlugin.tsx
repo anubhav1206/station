@@ -10,10 +10,7 @@ import {
 } from '../../../utils/massaConstants';
 
 import { useDelete, usePost, useResource } from '../../../custom/api';
-import {
-  IMassaPlugin,
-  PluginStatus,
-} from '../../../../../shared/interfaces/IPlugin';
+import { MassaPluginModel, PluginStatus } from '../../../models';
 
 interface PluginExecuteRequest {
   command: string;
@@ -25,16 +22,16 @@ export function StationPlugin({
   plugin,
   fetchPlugins,
 }: {
-  plugin: IMassaPlugin;
+  plugin: MassaPluginModel;
   fetchPlugins: () => void;
 }) {
-  const [myPlugin, setMyPlugin] = useState<IMassaPlugin>(plugin);
+  const [myPlugin, setMyPlugin] = useState<MassaPluginModel>(plugin);
   const { author, name, home, status, updatable, id } = myPlugin;
   const {
     data: newPlugin,
     refetch,
     isRefetching,
-  } = useResource<IMassaPlugin>(`plugin-manager/${id}`);
+  } = useResource<MassaPluginModel>(`plugin-manager/${id}`);
 
   const { mutate, isSuccess } = usePost<PluginExecuteRequest>(
     `plugin-manager/${id}/execute`,
